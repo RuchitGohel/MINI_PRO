@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>CSV Data Visualizer</h1>
+	<form method="post" enctype="multipart/form-data" class="form-card">
+		<label>
+			<span>Upload CSV file</span>
+			<input type="file" name="csv_file" accept=".csv" required />
+		</label>
+		<div class="grid-2">
+			<label>
+				<span>Chart type</span>
+				<select name="chart_type" required>
+					<option value="bar">Bar</option>
+					<option value="line">Line</option>
+					<option value="scatter">Scatter</option>
+					<option value="pie">Pie</option>
+				</select>
+			</label>
+			<label>
+				<span>X column (for line/scatter)</span>
+				<input type="text" name="x_column" placeholder="e.g., sepal_length" />
+			</label>
+			<label>
+				<span>Y column (for line/scatter/bar/pie)</span>
+				<input type="text" name="y_column" placeholder="e.g., sepal_width" />
+			</label>
+		</div>
+		<button type="submit" class="button">Visualize</button>
+	</form>
+
+	{% if chart_error_message %}
+		<p class="error">{{ chart_error_message }}</p>
+	{% endif %}
+
+	{% if chart_url %}
+		<div class="chart-card">
+			<img src="{{ chart_url }}" alt="Generated chart" />
+			<div class="actions">
+				<a class="button" href="{{ download_url }}">Download PNG</a>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
